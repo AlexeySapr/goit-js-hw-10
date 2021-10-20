@@ -28,6 +28,7 @@ function onInput(event) {
         //проверка что много стран
         if (countries.length > 10) {
           Notify.info('Too many matches found. Please enter a more specific name.');
+          refs.countryInfo.innerHTML = '';
           refs.countryList.innerHTML = '';
         } else {
           // создание разметки
