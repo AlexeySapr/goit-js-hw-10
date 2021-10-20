@@ -22,24 +22,32 @@ function onInput(event) {
   }
 
   fetch(`https://restcountries.com/v3.1/name/${countryName}`)
-    .then(response => {
-      return response.json();
-    })
+    .then(response => response.json())
     .then(countries => {
-      //проверка что много стран
-      if (countries.length > 10) {
-        Notify.info('Too many matches found. Please enter a more specific name.');
-        refs.countryList.innerHTML = '';
-      } else if (countries.length === 1) {
-        // создание разметки
-        const markup = countryInfoTpl(countries[0]);
-        //рендер разметки
-        refs.countryInfo.innerHTML = markup;
+      if (Array.isArray(countries)) {
+        //проверка что много стран
+        if (countries.length > 10) {
+          Notify.info('Too many matches found. Please enter a more specific name.');
+          refs.countryList.innerHTML = '';
+        } else {
+          // создание разметки
+          const markup = countries.map(countryItemTpl).join('');
+          //рендер разметки
+          refs.countryInfo.innerHTML = '';
+          refs.countryList.innerHTML = markup;
+        }
+
+        if (countries.length === 1) {
+          // создание разметки
+          const markup = countryInfoTpl(countries[0]);
+
+          //рендер разметки
+          refs.countryInfo.insertAdjacentHTML('beforeend', markup);
+        }
       } else {
-        // создание разметки
-        const markup = countries.map(countryItemTpl).join('');
-        //рендер разметки
-        refs.countryList.innerHTML = markup;
+        refs.countryInfo.innerHTML = '';
+        refs.countryList.innerHTML = '';
+        Notify.failure('Nothing found. Try again.');
       }
     })
     .catch(error => {

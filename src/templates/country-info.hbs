@@ -1,10 +1,6 @@
-<div class='country-title'>
-  <img src='{{flags.svg}}' alt='country-flag' class='country-flag' />
-  <p class='country-name'>{{name.common}}</p>
-</div>
 <ul class='description-list'>
-  <li class='description-item' name='capital'><span>Capital:</span> {{capital}}</li>
-  <li class='description-item' name='population'><span>Population:</span> {{population}}</li>
+  <li class='description-item' name='capital'><span>Capital:</span> {{capital}},</li>
+  <li class='description-item' name='population'><span>Population:</span> {{population}},</li>
   <li class='description-item' name='languages'><span>Languages:</span>
-    {{#each languages}}{{this}}{{/each}}</li>
+    {{#each languages}}{{this}}, {{/each}}</li>
 </ul>

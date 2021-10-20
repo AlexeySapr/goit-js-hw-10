@@ -30,25 +30,20 @@ ul {
   padding: 0;
 }
 
-.country-item,
-.country-title {
+.country-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
 
 .country-flag {
+  width: 90px;
   margin-right: 10px;
-  width: 70px;
 }
 
 .country-info,
 .country-list {
   margin-left: 40px;
-}
-
-.country-title {
-  margin-bottom: 20px;
 }
 
 .country-name {
