@@ -4,7 +4,7 @@ import countryInfoTpl from './templates/country-info.hbs';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import getRefs from './js/get-refs';
-import CountriesApiService from './js/country-service';
+import { CountriesApiService } from './js/country-service';
 
 const DEBOUNCE_DELAY = 300;
 

@@ -1,4 +1,4 @@
-export default class CountriesApiService {
+class CountriesApiService {
   constructor() {
     this.searchQuery = '';
     this.baseUrl = 'https://restcountries.com/v3.1/name';
@@ -18,3 +18,6 @@ export default class CountriesApiService {
     this.searchQuery = newQuery;
   }
 }
+
+
+export { CountriesApiService };
