@@ -21,8 +21,7 @@ function onInput(event) {
     return;
   }
 
-  fetch(`https://restcountries.com/v3.1/name/${countryName}`)
-    .then(response => response.json())
+  fetchCountries(countryName)
     .then(countries => {
       if (Array.isArray(countries)) {
         if (countries.length > 10) {
@@ -43,17 +42,19 @@ function onInput(event) {
     });
 }
 
+function fetchCountries(countryName) {
+  return fetch(`https://restcountries.com/v3.1/name/${countryName}`).then(response => {
+    return response.json();
+  });
+}
+
 function renderCountryInfo(country) {
-  // создание разметки
   const markup = countryInfoTpl(country);
-  //рендер разметки
   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
 }
 
 function renderCountryList(countries) {
-  // создание разметки
   const markup = countries.map(countryItemTpl).join('');
-  //рендер разметки
   refs.countryInfo.innerHTML = '';
   refs.countryList.innerHTML = markup;
 }
