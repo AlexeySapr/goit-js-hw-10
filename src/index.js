@@ -3,15 +3,12 @@ import countryItemTpl from './templates/country-item.hbs';
 import countryInfoTpl from './templates/country-info.hbs';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import getRefs from './js/get-refs';
 import CountriesApiService from './js/country-service';
 
 const DEBOUNCE_DELAY = 300;
 
-const refs = {
-  searchBox: document.querySelector('#search-box'),
-  countryList: document.querySelector('ul.country-list'),
-  countryInfo: document.querySelector('div.country-info'),
-};
+const refs = getRefs();
 
 const countriesApiService = new CountriesApiService();
 
