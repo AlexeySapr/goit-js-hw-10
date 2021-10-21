@@ -3,6 +3,7 @@ import countryItemTpl from './templates/country-item.hbs';
 import countryInfoTpl from './templates/country-info.hbs';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import CountriesApiService from './js/country-service';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -12,16 +13,19 @@ const refs = {
   countryInfo: document.querySelector('div.country-info'),
 };
 
+const countriesApiService = new CountriesApiService();
+
 refs.searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(event) {
-  const countryName = event.target.value.trim();
-  if (countryName === '') {
+  countriesApiService.query = event.target.value.trim();
+  if (countriesApiService.query === '') {
     clearWindow();
     return;
   }
 
-  fetchCountries(countryName)
+  countriesApiService
+    .fetchCountries()
     .then(countries => {
       if (Array.isArray(countries)) {
         if (countries.length > 10) {
@@ -38,12 +42,6 @@ function onInput(event) {
       }
     })
     .catch(nothingFound);
-}
-
-function fetchCountries(countryName) {
-  return fetch(`https://restcountries.com/v3.1/name/${countryName}`).then(response => {
-    return response.json();
-  });
 }
 
 function renderCountryInfo(country) {
