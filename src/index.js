@@ -17,7 +17,7 @@ refs.searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 function onInput(event) {
   const countryName = event.target.value.trim();
   if (countryName === '') {
-    refs.countryList.innerHTML = '';
+    clearWindow();
     return;
   }
 
@@ -25,33 +25,50 @@ function onInput(event) {
     .then(response => response.json())
     .then(countries => {
       if (Array.isArray(countries)) {
-        //проверка что много стран
         if (countries.length > 10) {
-          Notify.info('Too many matches found. Please enter a more specific name.');
-          refs.countryInfo.innerHTML = '';
-          refs.countryList.innerHTML = '';
+          tooManyMatches();
         } else {
-          // создание разметки
-          const markup = countries.map(countryItemTpl).join('');
-          //рендер разметки
-          refs.countryInfo.innerHTML = '';
-          refs.countryList.innerHTML = markup;
+          renderCountryList(countries);
         }
 
         if (countries.length === 1) {
-          // создание разметки
-          const markup = countryInfoTpl(countries[0]);
-
-          //рендер разметки
-          refs.countryInfo.insertAdjacentHTML('beforeend', markup);
+          renderCountryInfo(countries[0]);
         }
       } else {
-        refs.countryInfo.innerHTML = '';
-        refs.countryList.innerHTML = '';
-        Notify.failure('Nothing found. Try again.');
+        nothingFound();
       }
     })
     .catch(error => {
       console.log(error);
     });
+}
+
+function renderCountryInfo(country) {
+  // создание разметки
+  const markup = countryInfoTpl(country);
+  //рендер разметки
+  refs.countryInfo.insertAdjacentHTML('beforeend', markup);
+}
+
+function renderCountryList(countries) {
+  // создание разметки
+  const markup = countries.map(countryItemTpl).join('');
+  //рендер разметки
+  refs.countryInfo.innerHTML = '';
+  refs.countryList.innerHTML = markup;
+}
+
+function clearWindow() {
+  refs.countryInfo.innerHTML = '';
+  refs.countryList.innerHTML = '';
+}
+
+function tooManyMatches() {
+  clearWindow();
+  Notify.info('Too many matches found. Please enter a more specific name.');
+}
+
+function nothingFound() {
+  clearWindow();
+  Notify.failure('Nothing found. Try again.');
 }
