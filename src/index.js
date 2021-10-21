@@ -37,9 +37,7 @@ function onInput(event) {
         nothingFound();
       }
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(nothingFound);
 }
 
 function fetchCountries(countryName) {
