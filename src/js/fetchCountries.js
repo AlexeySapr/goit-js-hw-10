@@ -1,14 +1,17 @@
 class CountriesApiService {
+  #baseUrl = 'https://restcountries.com/v3.1/name';
+  #categories = 'flags,name,capital,population,languages';
+
   constructor() {
     this.searchQuery = '';
-    this.baseUrl = 'https://restcountries.com/v3.1/name';
-    this.categories = 'flags,name,capital,population,languages';
   }
 
   fetchCountries() {
-    return fetch(`${this.baseUrl}/${this.searchQuery}?fields=${this.categories}`).then(response => {
-      return response.json();
-    });
+    return fetch(`${this.#baseUrl}/${this.searchQuery}?fields=${this.#categories}`).then(
+      response => {
+        return response.json();
+      },
+    );
   }
 
   get query() {

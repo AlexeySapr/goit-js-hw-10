@@ -12,6 +12,8 @@ const refs = getRefs();
 
 const countriesApiService = new CountriesApiService();
 
+console.log(countriesApiService);
+
 refs.searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(event) {
